@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../node_modules/cropperjs/dist/cropper.min.css">
+    <script src="../node_modules/cropperjs/dist/cropper.min.js"></script>
+
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="../js/app.js"></script>
+
+    <title>local ocr</title>
+</head>
+<body>
+
+<!-- header -->
+<nav class="navbar navbar-dark bg-dark mb-3">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">local ocr</span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <!-- crop controls -->
+        <div class="col" style="max-width: 42px">
+            <button type="button" id="btn-crop" class="btn btn-sm btn-outline-primary d-block mb-1" title="Crop">
+                <i class="bi bi-scissors"></i>
+            </button>
+            <span class="mb-3 d-block"></span>
+            <button type="button" id="btn-rotate-left" class="btn btn-sm btn-outline-secondary d-block mb-1" title="Rotate left">
+                <i class="bi bi-arrow-counterclockwise"></i>
+            </button>
+            <button type="button" id="btn-rotate-right" class="btn btn-sm btn-outline-secondary d-block mb-1" title="Rotate right">
+                <i class="bi bi-arrow-clockwise"></i>
+            </button>
+            <span class="mb-3 d-block"></span>
+            <button type="button" id="btn-zoom-in" class="btn btn-sm btn-outline-secondary d-block mb-1" title="Zoom in">
+                <i class="bi bi-zoom-in"></i>
+            </button>
+            <button type="button" id="btn-zoom-out" class="btn btn-sm btn-outline-secondary d-block mb-1" title="Zoom out">
+                <i class="bi bi-zoom-out"></i>
+            </button>
+            <span class="mb-3 d-block"></span>
+            <button type="button" id="btn-ocr" class="btn btn-sm btn-primary d-block mb-1" title="Go to OCR">
+                <i class="bi bi-check"></i>
+            </button>
+        </div>
+        <div class="col" style="width: 100%">
+            <!-- crop area -->
+            <div>
+                <img id="crop" src="../picture.jpg" alt="picture to crop">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

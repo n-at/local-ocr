@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="../js/open_image_file.js"></script>
+
+    <style>
+        canvas {
+            border: 1px solid #777;
+        }
+    </style>
+
+    <title>open file test</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="mb-3">
+        <button type="button" id="btn-open-file" class="btn btn-outline-success">
+            Open file
+        </button>
+    </div>
+    <div class="mb-3">
+        <canvas id="canvas" width="300" height="300"></canvas>
+    </div>
+    <form class="d-none">
+        <input type="file" id="open-file-input" accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+    </form>
+</div>
+
+<script>
+    const oif = OpenImageFile(document.getElementById('open-file-input'), {
+        accept: dataUrl => {
+            const img = new Image();
+            img.addEventListener('load', () => {
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, 300, 300);
+            })
+            img.src = dataUrl;
+        },
+        error: e => {
+            console.log(e.getMessage());
+        },
+    });
+
+    document.getElementById('btn-open-file').addEventListener('click', () => {
+        oif.open();
+    });
+</script>
+
+</body>
+</html>
