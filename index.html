@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="node_modules/cropperjs/dist/cropper.min.css">
+    <script src="node_modules/cropperjs/dist/cropper.min.js"></script>
+
+    <style>
+        #drop-area.drag-over {
+            background-color: rgba(0, 0, 0, .1);
+        }
+        canvas {
+            border: 1px solid #777;
+        }
+    </style>
+
+    <title>local-ocr</title>
+</head>
+<body>
+
+<nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">local-ocr</span>
+    </div>
+</nav>
+
+<!-- Start screen -->
+<div id="start">
+    <div class="row mt-3">
+        <div class="col-4 offset-4">
+            <div class="d-grid gap-2">
+                <button id="btn-open-camera" type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-camera"></i> Capture camera
+                </button>
+                <button id="btn-open-screenshot" type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-display"></i> Capture screen
+                </button>
+                <button id="btn-open-file" type="button" class="btn btn-outline-primary">
+                    <i class="bi bi-folder2-open"></i> Open file
+                </button>
+                <div class="card mt-2 mb-3 text-center">
+                    <div id="drop-area" class="card-body">
+                        <div class="mt-3 mb-3 text-primary">
+                            <i class="bi bi-arrow-down"></i> Drop file here
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Capture camera -->
+<div id="capture-camera" class="text-center d-none">
+    <canvas id="camera-preview"></canvas>
+    <div class="mt-2 mb-3">
+        <button id="btn-open-camera-capture" type="button" class="btn btn-outline-primary">
+            <i class="bi bi-camera"></i> Capture
+        </button>
+    </div>
+</div>
+
+<!-- Capture screen -->
+<div id="capture-screen" class="text-center d-none">
+    <canvas id="screen-preview"></canvas>
+    <div class="mt-2 mb-3">
+        <button id="btn-capture-screen-capture" type="button" class="btn btn-outline-primary">
+            <i class="bi bi-camera"></i> Capture
+        </button>
+    </div>
+</div>
+
+<!-- Open file -->
+<form class="d-none">
+    <input type="file" id="open-file-input" accept=".png,.jpg,.jpeg,image/png,image/jpeg">
+</form>
+
+<!-- Cropper -->
+<div id="cropper" class="d-none">
+    <div class="mt-1 mb-1 text-center">
+        <button type="button" id="btn-crop-crop" class="btn btn-sm btn-outline-primary" title="Crop">
+            <i class="bi bi-scissors"></i>
+        </button>
+        <button type="button" id="btn-crop-rotate-left" class="btn btn-sm btn-outline-secondary" title="Rotate left">
+            <i class="bi bi-arrow-counterclockwise"></i>
+        </button>
+        <button type="button" id="btn-crop-rotate-right" class="btn btn-sm btn-outline-secondary" title="Rotate right">
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
+        <button type="button" id="btn-crop-zoom-in" class="btn btn-sm btn-outline-secondary" title="Zoom in">
+            <i class="bi bi-zoom-in"></i>
+        </button>
+        <button type="button" id="btn-crop-zoom-out" class="btn btn-sm btn-outline-secondary" title="Zoom out">
+            <i class="bi bi-zoom-out"></i>
+        </button>
+        <button type="button" id="btn-crop-next" class="btn btn-sm btn-primary" title="Go to OCR">
+            <i class="bi bi-check"></i>
+        </button>
+    </div>
+    <div class="text-center">
+        <div>
+            <img id="cropper-image" src="" alt="crop">
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/capture_camera_image.js"></script>
+<script src="js/capture_screen_image.js"></script>
+<script src="js/open_image_file.js"></script>
+<script src="js/drop_image_file.js"></script>
+<script src="js/ui.js"></script>
+
+</body>
+</html>

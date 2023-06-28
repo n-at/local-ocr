@@ -19,7 +19,9 @@ function CaptureCameraImage(el, options) {
         const scaleWidth = el.getAttribute('width') / videoWidth;
         const scaleHeight = el.getAttribute('height') / videoHeight;
         const scale = Math.min(scaleWidth, scaleHeight);
-        ctx.drawImage(videoElement, 0, 0, videoWidth * scale, videoHeight * scale);
+        const scaledWidth = videoWidth * scale;
+        const scaledHeight = videoHeight * scale;
+        ctx.drawImage(videoElement, (el.width-scaledWidth)/2, (el.height-scaledHeight)/2, scaledWidth, scaledHeight);
     };
 
     const stop = () => {
