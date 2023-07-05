@@ -108,11 +108,91 @@
 <!-- OCR parameters -->
 <div id="ocr-params" class="mt-3 d-none">
     <h3>Choose languages</h3>
-    <div id="ocr-languages" class="row"></div>
-    <div class="md-3 mt-3">
-        <button id="btn-ocr-params-next" class="btn btn-outline-primary">
-            OCR
-        </button>
+    <div id="ocr-languages" class="row mb-3"></div>
+
+    <h3>Parameters</h3>
+    <div class="mb-3">
+        <fieldset>
+            <legend>OCR engine mode</legend>
+            <div class="form-check">
+                <input type="radio" id="oem-0" name="ocr-engine-mode" class="form-check-input" value="0">
+                <label for="oem-0" class="form-check-label">Run Tesseract only - fastest; deprecated</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="oem-1" name="ocr-engine-mode" class="form-check-input" value="1">
+                <label for="oem-1" class="form-check-label">Run just the LSTM line recognizer</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="oem-2" name="ocr-engine-mode" class="form-check-input" value="2">
+                <label for="oem-2" class="form-check-label">Run the LSTM recognizer, but allow fallback to Tesseract when things get difficult. deprecated</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="oem-3" name="ocr-engine-mode" class="form-check-input" value="3" checked>
+                <label for="oem-3" class="form-check-label">Default</label>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Page segmentation mode</legend>
+            <div class="form-check">
+                <input type="radio" id="psm-0" name="page-seg-mode" class="form-check-input" value="0">
+                <label for="psm-0" class="form-check-label">Orientation and script detection only</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-1" name="page-seg-mode" class="form-check-input" value="1">
+                <label for="psm-1" class="form-check-label">Automatic page segmentation with orientation and script detection (OSD)</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-2" name="page-seg-mode" class="form-check-input" value="2">
+                <label for="psm-2" class="form-check-label">Automatic page segmentation, but no OSD, or OCR</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-3" name="page-seg-mode" class="form-check-input" value="3">
+                <label for="psm-3" class="form-check-label">Fully automatic page segmentation, but no OSD</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-4" name="page-seg-mode" class="form-check-input" value="4">
+                <label for="psm-4" class="form-check-label">Assume a single column of text of variable sizes</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-5" name="page-seg-mode" class="form-check-input" value="5">
+                <label for="psm-5" class="form-check-label">Assume a single uniform block of vertically aligned text</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-6" name="page-seg-mode" class="form-check-input" value="6">
+                <label for="psm-6" class="form-check-label">Assume a single uniform block of text</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-7" name="page-seg-mode" class="form-check-input" value="7" checked>
+                <label for="psm-7" class="form-check-label">Treat the image as a single text line</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-8" name="page-seg-mode" class="form-check-input" value="8">
+                <label for="psm-8" class="form-check-label">Treat the image as a single word</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-9" name="page-seg-mode" class="form-check-input" value="9">
+                <label for="psm-9" class="form-check-label">Treat the image as a single word in a circle</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-10" name="page-seg-mode" class="form-check-input" value="10">
+                <label for="psm-10" class="form-check-label">Treat the image as a single character</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-11" name="page-seg-mode" class="form-check-input" value="11">
+                <label for="psm-11" class="form-check-label">Find as much text as possible in no particular order</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-12" name="page-seg-mode" class="form-check-input" value="12">
+                <label for="psm-12" class="form-check-label">Sparse text with orientation and script det</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" id="psm-13" name="page-seg-mode" class="form-check-input" value="13">
+                <label for="psm-13" class="form-check-label">Treat the image as a single text line, bypassing hacks that are Tesseract-specific</label>
+            </div>
+        </fieldset>
+    </div>
+    <div class="mb-3">
+        <button id="btn-ocr-params-next" class="btn btn-outline-primary">OCR</button>
     </div>
 </div>
 

@@ -162,7 +162,9 @@
     });
     document.getElementById('btn-ocr-params-next').addEventListener('click', () => {
         const languages = collectOcrLanguages();
-        console.log(languages);
+        const engineMode = collectOcrEngineMode();
+        const pageSegmentationMode = collectOcrPageSegmentationMode();
+        console.log(languages, engineMode, pageSegmentationMode);
     });
 
     ///////////////////////////////////////////////////////////////////////////
@@ -234,6 +236,22 @@
             }
         }
         return value;
+    }
+
+    function collectOcrEngineMode() {
+        const el = document.querySelector('input[type="radio"][name="ocr-engine-mode"]:checked');
+        if (!el) {
+            return 3;
+        }
+        return parseInt(el.getAttribute('value'));
+    }
+
+    function collectOcrPageSegmentationMode() {
+        const el = document.querySelector('input[type="radio"][name="page-seg-mode"]:checked');
+        if (!el) {
+            return 6;
+        }
+        return parseInt(el.getAttribute('value'));
     }
 
 })();
