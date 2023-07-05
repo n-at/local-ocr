@@ -58,7 +58,6 @@
     const cropper = new Cropper(cropperImage, {
         viewMode: 0,
         dragMode: 'move',
-        minContainerHeight: 500,
     });
     document.getElementById('btn-crop-crop').addEventListener('click', () => {
         const imageDataUrl = cropper.getCroppedCanvas().toDataURL();
@@ -85,23 +84,34 @@
     ///////////////////////////////////////////////////////////////////////////
     // Resize canvas on resize window
 
+    const maxCanvasHeight = 500;
+
     function adjustCanvasSize() {
-        const canvasIdx = [
+        const size = canvasSize();
+
+        [
             'camera-preview',
             'screen-preview',
-        ];
-        const size = canvasSize();
-        for (let idx = 0; idx < canvasIdx.length; idx++) {
-            const el = document.getElementById(canvasIdx[idx]);
+        ].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) {
+                return;
+            }
             el.width = size.width;
             el.height = size.height;
-        }
+        });
     }
 
     function canvasSize() {
         const ratio = window.screen.availHeight / window.screen.availWidth;
-        const width = window.innerWidth - 20;
-        const height = width * ratio;
+        let width = window.innerWidth - 20;
+        let height = width * ratio;
+
+        if (height > maxCanvasHeight) {
+            height = maxCanvasHeight;
+            width = height / ratio;
+        }
+
         return {
             width,
             height,
