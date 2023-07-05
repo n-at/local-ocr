@@ -4,6 +4,7 @@
   "dependencies": {
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.10.5",
-    "cropperjs": "^1.5.13"
+    "cropperjs": "^1.5.13",
+    "tesseract.js": "^4.1.1"
   }
 }

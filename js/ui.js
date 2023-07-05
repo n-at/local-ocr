@@ -1,15 +1,11 @@
 (() => {
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Capture camera
+
     const captureCameraImage = CaptureCameraImage(document.getElementById('camera-preview'), {
-        accept: dataUrl => {
-            captureCameraImage.stop();
-            captureCameraVisibility(false);
-            cropper.replace(dataUrl);
-            cropperVisibility(true);
-        },
-        error: e => {
-            console.log(e)
-        },
+        accept: cropImage,
+        error: reportError,
     });
     document.getElementById('btn-open-camera').addEventListener('click', () => {
         startVisibility(false);
@@ -21,17 +17,11 @@
     });
 
     ///////////////////////////////////////////////////////////////////////////
+    // Capture screen
 
     const captureScreenImage = CaptureScreenImage(document.getElementById('screen-preview'), {
-        accept: dataUrl => {
-            captureScreenImage.stop();
-            captureScreenVisibility(false);
-            cropper.replace(dataUrl);
-            cropperVisibility(true);
-        },
-        error: e => {
-            console.log(e)
-        },
+        accept: cropImage,
+        error: reportError,
     });
     document.getElementById('btn-open-screenshot').addEventListener('click', () => {
         startVisibility(false);
@@ -43,35 +33,26 @@
     });
 
     ///////////////////////////////////////////////////////////////////////////
+    // Open image file
 
     const openImageFile = OpenImageFile(document.getElementById('open-file-input'), {
-        accept: dataUrl => {
-            startVisibility(false);
-            cropper.replace(dataUrl);
-            cropperVisibility(true);
-        },
-        error: e => {
-            console.log(e.getMessage());
-        },
+        accept: cropImage,
+        error: reportError,
     });
     document.getElementById('btn-open-file').addEventListener('click', () => {
         openImageFile.open();
     });
 
     ///////////////////////////////////////////////////////////////////////////
+    // Drop image
 
     DropImageFile(document.getElementById('drop-area'), {
-        accept: dataUrl => {
-            startVisibility(false);
-            cropper.replace(dataUrl);
-            cropperVisibility(true);
-        },
-        error: e => {
-            console.log(e.getMessage());
-        },
+        accept: cropImage,
+        error: reportError,
     });
 
     ///////////////////////////////////////////////////////////////////////////
+    // Crop image
 
     const cropperImage = document.getElementById('cropper-image');
     const cropper = new Cropper(cropperImage, {
@@ -102,6 +83,7 @@
     });
 
     ///////////////////////////////////////////////////////////////////////////
+    // Resize canvas on resize window
 
     function adjustCanvasSize() {
         const canvasIdx = [
@@ -132,6 +114,24 @@
     adjustCanvasSize();
 
     ///////////////////////////////////////////////////////////////////////////
+    // UI elements visibility
+
+    function cropImage(dataUrl) {
+        startVisibility(false);
+
+        captureCameraVisibility(false);
+        captureCameraImage.stop();
+
+        captureScreenVisibility(false);
+        captureScreenImage.stop();
+
+        cropper.replace(dataUrl);
+        cropperVisibility(true);
+    }
+
+    function reportError(e) {
+        console.log(e);
+    }
 
     function startVisibility(value) {
         elementVisibility('start', value);
