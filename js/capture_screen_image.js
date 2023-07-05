@@ -1,5 +1,5 @@
-function CaptureScreenImage(el, options) {
-    if (!el) {
+function CaptureScreenImage(previewCanvasEl, options) {
+    if (!previewCanvasEl) {
         throw new Error('el required');
     }
 
@@ -7,7 +7,7 @@ function CaptureScreenImage(el, options) {
     const error = options.error ? options.error : () => {};
     const fps = options.fps ? options.fps : 30;
 
-    const ctx = el.getContext('2d');
+    const ctx = previewCanvasEl.getContext('2d');
 
     let mediaStream = null;
     let videoElement = null;
@@ -16,12 +16,12 @@ function CaptureScreenImage(el, options) {
     const drawNextFrame = () => {
         const videoWidth = videoElement.getAttribute('width');
         const videoHeight = videoElement.getAttribute('height');
-        const scaleWidth = el.getAttribute('width') / videoWidth;
-        const scaleHeight = el.getAttribute('height') / videoHeight;
+        const scaleWidth = previewCanvasEl.getAttribute('width') / videoWidth;
+        const scaleHeight = previewCanvasEl.getAttribute('height') / videoHeight;
         const scale = Math.min(scaleWidth, scaleHeight);
         const scaledWidth = videoWidth * scale;
         const scaledHeight = videoHeight * scale;
-        ctx.drawImage(videoElement, (el.width-scaledWidth)/2, (el.height-scaledHeight)/2, scaledWidth, scaledHeight);
+        ctx.drawImage(videoElement, (previewCanvasEl.width-scaledWidth)/2, (previewCanvasEl.height-scaledHeight)/2, scaledWidth, scaledHeight);
     };
 
     const stop = () => {
@@ -66,9 +66,18 @@ function CaptureScreenImage(el, options) {
         },
 
         capture() {
-            if (mediaStream != null) {
-                accept(el.toDataURL());
+            if (mediaStream == null) {
+                return;
             }
+            const canvas = document.createElement('canvas');
+            canvas.height = videoElement.height;
+            canvas.width = videoElement.width;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+            accept(canvas.toDataURL());
+            canvas.remove();
         },
     };
 }
