@@ -78,7 +78,7 @@
     document.getElementById('btn-crop-next').addEventListener('click', () => {
         cropperVisibility(false);
         const imageDataUrl = cropper.getCroppedCanvas().toDataURL();
-        console.log(imageDataUrl); //TODO
+        ocrParameters(imageDataUrl);
     });
 
     ///////////////////////////////////////////////////////////////////////////
@@ -124,6 +124,48 @@
     adjustCanvasSize();
 
     ///////////////////////////////////////////////////////////////////////////
+    // OCR parameters
+
+    let ocrImage = null;
+
+    window.addEventListener('load', () => {
+        const languagesContainer = document.getElementById('ocr-languages');
+
+        for (let langCode in OcrLanguages) {
+            const div = document.createElement('div');
+            div.classList.add('col-3');
+
+            const id = 'lang-' + langCode;
+
+            const check = document.createElement('div');
+            check.classList.add('form-check');
+            div.append(check);
+
+            const input = document.createElement('input');
+            input.setAttribute('id', id);
+            input.setAttribute('type', 'checkbox');
+            input.setAttribute('value', langCode);
+            input.classList.add('form-check-input');
+            if (langCode === 'eng' || langCode === 'rus') {
+                input.setAttribute('checked', 'checked');
+            }
+            check.append(input);
+
+            const label = document.createElement('label');
+            label.setAttribute('for', id);
+            label.classList.add('form-check-label');
+            label.innerText = OcrLanguages[langCode];
+            check.append(label);
+
+            languagesContainer.append(div);
+        }
+    });
+    document.getElementById('btn-ocr-params-next').addEventListener('click', () => {
+        const languages = collectOcrLanguages();
+        console.log(languages);
+    });
+
+    ///////////////////////////////////////////////////////////////////////////
     // UI elements visibility
 
     function cropImage(dataUrl) {
@@ -137,6 +179,12 @@
 
         cropper.replace(dataUrl);
         cropperVisibility(true);
+    }
+
+    function ocrParameters(dataUrl) {
+        cropperVisibility(false);
+        ocrImage = dataUrl;
+        ocrParamsVisibility(true);
     }
 
     function reportError(e) {
@@ -159,6 +207,10 @@
         elementVisibility('cropper', value);
     }
 
+    function ocrParamsVisibility(value) {
+        elementVisibility('ocr-params', value);
+    }
+
     function elementVisibility(id, value) {
         const el = document.getElementById(id);
         if (value) {
@@ -166,6 +218,22 @@
         } else {
             el.classList.add('d-none');
         }
+    }
+
+    function collectOcrLanguages() {
+        const container = document.getElementById('ocr-languages');
+        const inputs = container.getElementsByTagName('input');
+        let value = '';
+        for (let idx = 0; idx < inputs.length; idx++) {
+            const input = inputs[idx];
+            if (input.getAttribute('checked')) {
+                if (value.length > 0) {
+                    value += '+';
+                }
+                value += input.getAttribute('value');
+            }
+        }
+        return value;
     }
 
 })();
