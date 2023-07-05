@@ -160,12 +160,41 @@
             languagesContainer.append(div);
         }
     });
-    document.getElementById('btn-ocr-params-next').addEventListener('click', () => {
+    document.getElementById('btn-ocr-params-next').addEventListener('click', ocr);
+
+    function ocr() {
+        ocrParamsVisibility(false);
+        ocrProgressVisibility(true);
+
         const languages = collectOcrLanguages();
-        const engineMode = collectOcrEngineMode();
-        const pageSegmentationMode = collectOcrPageSegmentationMode();
-        console.log(languages, engineMode, pageSegmentationMode);
-    });
+        const options = {
+            tessedit_ocr_engine_mode: collectOcrEngineMode(),
+            tessedit_pageseg_mode: collectOcrPageSegmentationMode(),
+            tessedit_char_whitelist: '',
+            preserve_interword_spaces: '0',
+            user_defined_dpi: '',
+        };
+        DoOCR(ocrImage, languages, options, ocrProgress, ocrDone);
+    }
+
+    function ocrProgress(e) {
+        const progress = Math.round(e.progress * 100);
+
+        document.getElementById('ocr-progress-label').innerText = e.status;
+
+        const bar = document.getElementById('ocr-progress-bar');
+        bar.setAttribute('aria-valuenow', progress)
+
+        const value = document.getElementById('ocr-progress-bar-value');
+        value.style.width =  progress + '%';
+    }
+
+    function ocrDone(data) {
+        ocrProgressVisibility(false);
+        ocrResultVisibility(true);
+
+        console.log(data);
+    }
 
     ///////////////////////////////////////////////////////////////////////////
     // UI elements visibility
@@ -211,6 +240,14 @@
 
     function ocrParamsVisibility(value) {
         elementVisibility('ocr-params', value);
+    }
+
+    function ocrProgressVisibility(value) {
+        elementVisibility('ocr-progress', value);
+    }
+
+    function ocrResultVisibility(value) {
+        elementVisibility('ocr-result', value);
     }
 
     function elementVisibility(id, value) {
