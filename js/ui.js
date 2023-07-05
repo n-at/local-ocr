@@ -193,7 +193,42 @@
         ocrProgressVisibility(false);
         ocrResultVisibility(true);
 
-        console.log(data);
+        //data
+        //- data
+        //-- paragraphs []
+        //--- baseline: {x0, y0, x1, y1, has_baseline}
+        //--- bbox: {x0, y0, x1, y1}
+        //--- confidence
+        //--- text
+
+        const result = document.getElementById('ocr-result-container');
+
+        const img = document.getElementById('ocr-result-img');
+        img.src = ocrImage;
+
+        if (!data.data || !data.data.paragraphs) {
+            return;
+        }
+
+        const paragraphs = data.data.paragraphs;
+
+        for (let idx = 0; idx < paragraphs.length; idx++) {
+            const par = paragraphs[idx];
+
+            const box = document.createElement('div');
+            box.style.position = 'absolute';
+            box.style.left = par.bbox.x0 + 'px';
+            box.style.top = par.bbox.y0 + 'px';
+            box.style.width = (par.bbox.x1 - par.bbox.x0) + 'px';
+            box.style.height = (par.bbox.y1 - par.bbox.y0) + 'px';
+            box.classList.add('ocr-box');
+            box.title = 'Confidence: ' + par.confidence;
+            result.append(box);
+
+            const text = document.createElement('pre');
+            text.innerText = par.text;
+            box.append(text);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////
