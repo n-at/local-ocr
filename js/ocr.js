@@ -107,7 +107,7 @@ async function DoOCR(dataUrl, languages, options, onProgress, onDone) {
     const worker = await Tesseract.createWorker({
         langPath: 'models',
         logger: onProgress,
-        gzip: false,
+        gzip: true,
     });
     await worker.loadLanguage(languages);
     await worker.initialize(languages);
